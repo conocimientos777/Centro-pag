@@ -442,7 +442,7 @@
     </div>
 
     <script>
-        // ==================== CONFIGURACIÓN DE TEMAS (CORREGIDO Y FORZADO) ====================
+        // ==================== CONFIGURACIÓN DE TEMAS (FORZADA Y CORREGIDA) ====================
         const body = document.body;
         const configPanel = document.getElementById('configPanel');
         const openConfig = document.getElementById('openConfig');
@@ -481,7 +481,7 @@
         animToggle.addEventListener('change', () => body.classList.toggle('animations-on', animToggle.checked));
         fontNeonToggle.addEventListener('change', () => body.classList.toggle('neon-fonts-on', fontNeonToggle.checked));
 
-        // Botón Guardar Configuración (corregido)
+        // Botón Guardar (corregido y reforzado)
         document.getElementById('saveConfig').addEventListener('click', () => {
             const config = {
                 theme: themeSelect.value,
@@ -492,7 +492,7 @@
                 fontNeon: fontNeonToggle.checked
             };
             localStorage.setItem('neonConfig', JSON.stringify(config));
-            alert("¡Configuración guardada correctamente! ✅\nRecarga la página para ver los cambios aplicados.");
+            alert("✅ CONFIGURACIÓN GUARDADA CORRECTAMENTE\n\nRecarga la página (F5) para que el pulse neon y el glow se apliquen exactamente como los configuraste.");
         });
 
         document.getElementById('resetConfig').addEventListener('click', () => {
@@ -503,7 +503,7 @@
             }
         });
 
-        // ==================== LOGIN (ya estaba perfecto) ====================
+        // ==================== LOGIN (ya funciona perfectamente) ====================
         const seccionLogin = document.getElementById('seccionLogin');
         const mensajeEstado = document.getElementById('mensajeEstado');
         const btnLogin = document.getElementById('btnLogin');
@@ -571,37 +571,50 @@
             }
         }
 
-        // ==================== CARGA INICIAL (FORZADA Y CORREGIDA) ====================
+        // ==================== CARGA INICIAL (FORZADA AL MÁXIMO) ====================
         window.addEventListener('load', async () => {
-            // Cargar configuración guardada
+            // Limpiar primero todo
+            body.classList.remove(...neonClasses);
+            body.classList.remove('animations-on', 'neon-fonts-on');
+
             const savedConfig = localStorage.getItem('neonConfig');
+
             if (savedConfig) {
                 const c = JSON.parse(savedConfig);
 
                 // Aplicar tema
-                body.classList.remove(...neonClasses);
                 body.classList.add(c.theme || 'modo-clasico');
                 themeSelect.value = c.theme || 'modo-clasico';
 
-                // Aplicar color e intensidad
+                // Aplicar color, intensidad y radio
                 neonColorInput.value = c.neonColor || '#0066cc';
                 intensitySlider.value = parseFloat(c.intensity) || 0.65;
                 radiusSlider.value = parseFloat(c.radius) || 14;
 
-                // Aplicar checkboxes correctamente
-                animToggle.checked = c.animations !== false;
-                fontNeonToggle.checked = c.fontNeon !== false;
+                // Forzar checkboxes
+                const animationsEnabled = c.animations !== false;
+                const fontNeonEnabled = c.fontNeon !== false;
 
-                // Forzar las clases de animación y glow
-                body.classList.toggle('animations-on', animToggle.checked);
-                body.classList.toggle('neon-fonts-on', fontNeonToggle.checked);
+                animToggle.checked = animationsEnabled;
+                fontNeonToggle.checked = fontNeonEnabled;
+
+                // Forzar clases de pulse y glow (esto soluciona el problema)
+                if (animationsEnabled) body.classList.add('animations-on');
+                if (fontNeonEnabled) body.classList.add('neon-fonts-on');
+
             } else {
-                // Valores por defecto
+                // Valores por defecto si no hay nada guardado
+                body.classList.add('modo-clasico');
                 body.classList.add('animations-on');
                 body.classList.add('neon-fonts-on');
+                themeSelect.value = 'modo-clasico';
             }
 
+            // Aplicar cambios visuales
             applyChanges();
+
+            // Forzar repintado (necesario en algunas apps/webviews)
+            void body.offsetWidth;
 
             // Login persistente
             const usuarioGuardado = localStorage.getItem('usuarioLogueado');
@@ -618,7 +631,7 @@
             if (e.key === "Enter") intentarLogin();
         });
 
-        // BUSCADOR
+        // ==================== BUSCADOR ====================
         function normalizeText(text) {
             return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
