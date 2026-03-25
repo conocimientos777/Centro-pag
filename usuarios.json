@@ -1,0 +1,9 @@
+{
+  "usuarios": [
+    { "usuario": "admin", "contrasena": "123456" },
+    { "usuario": "juan", "contrasena": "abc123" },
+    { "usuario": "maria", "contrasena": "curso2025" },
+    { "usuario": "pedro", "contrasena": "1234" },
+    { "usuario": "ana", "contrasena": "academia" }
+  ]
+}
