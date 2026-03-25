@@ -70,7 +70,7 @@
         .modo-neon-black-red   { --neon-primary: #ff1a1a; --neon-glow: #ff1a1a; }
         .modo-neon-black-green { --neon-primary: #00ff88; --neon-glow: #00ff88; }
 
-        /* ==================== MODOS CLAROS (CORREGIDO) ==================== */
+        /* ==================== MODOS CLAROS ==================== */
         .modo-light-blue   { --neon-primary: #0066ff; --neon-glow: #3399ff; background: linear-gradient(rgba(230,245,255,0.97), rgba(200,235,255,0.98)) !important; color:#111111; }
         .modo-light-pink   { --neon-primary: #ff3399; --neon-glow: #ff66bb; background: linear-gradient(rgba(255,235,245,0.97), rgba(255,210,235,0.98)) !important; color:#111111; }
         .modo-light-green  { --neon-primary: #00cc66; --neon-glow: #33ff99; background: linear-gradient(rgba(230,255,240,0.97), rgba(200,255,225,0.98)) !important; color:#111111; }
@@ -113,7 +113,7 @@
             border: 3px solid var(--neon-primary);
         }
 
-        /* Pulso neon (funciona en todos excepto clásico) */
+        /* Pulso neon */
         body.animations-on:not(.modo-clasico) .info,
         body.animations-on:not(.modo-clasico) .btn-red,
         body.animations-on:not(.modo-clasico) .btn-sesion,
@@ -151,6 +151,75 @@
             font-size: 1.25rem; font-weight: 800; border-radius: var(--radio);
         }
 
+        /* ==================== BUSCADOR DE CATEGORÍAS (NUEVO) ==================== */
+        .buscador-categorias {
+            max-width: 520px;
+            margin: 20px auto 15px;
+        }
+        .buscador-categorias .input-wrapper {
+            position: relative;
+        }
+        .buscador-categorias input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            border-radius: var(--radio);
+            border: 3px solid var(--neon-primary);
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(16px);
+            color: inherit;
+            font-size: 1.15rem;
+            font-weight: 600;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3), 0 0 calc(18px * var(--glow-intensity)) var(--neon-glow);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .buscador-categorias input:focus {
+            box-shadow: 0 0 calc(25px * var(--glow-intensity)) var(--neon-glow);
+            transform: translateY(-1px);
+        }
+        .buscador-categorias input::placeholder {
+            color: rgba(255,255,255,0.7);
+            font-weight: 500;
+        }
+        .buscador-categorias .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: var(--neon-primary);
+            pointer-events: none;
+        }
+
+        /* Ajustes para modos claros y clásico */
+        .modo-clasico .buscador-categorias input,
+        .modo-light-blue .buscador-categorias input,
+        .modo-light-pink .buscador-categorias input,
+        .modo-light-green .buscador-categorias input,
+        .modo-light-purple .buscador-categorias input,
+        .modo-light-gold .buscador-categorias input {
+            background: rgba(255,255,255,0.95) !important;
+            color: #111111 !important;
+            border-color: var(--neon-primary);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+        .modo-clasico .buscador-categorias input::placeholder,
+        .modo-light-blue .buscador-categorias input::placeholder,
+        .modo-light-pink .buscador-categorias input::placeholder,
+        .modo-light-green .buscador-categorias input::placeholder,
+        .modo-light-purple .buscador-categorias input::placeholder,
+        .modo-light-gold .buscador-categorias input::placeholder {
+            color: rgba(0,0,0,0.5) !important;
+        }
+        .modo-clasico .buscador-categorias .search-icon,
+        .modo-light-blue .buscador-categorias .search-icon,
+        .modo-light-pink .buscador-categorias .search-icon,
+        .modo-light-green .buscador-categorias .search-icon,
+        .modo-light-purple .buscador-categorias .search-icon,
+        .modo-light-gold .buscador-categorias .search-icon {
+            color: var(--neon-primary) !important;
+        }
+
         .categorias { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
         .btn-carpeta {
             height: 112px; border-radius: var(--radio); color: white; font-weight: 700; font-size: 1.1rem;
@@ -158,7 +227,7 @@
         }
         .icono { font-size: 2.65rem; }
 
-        /* ==================== PANEL DE CONFIGURACIÓN (CORREGIDO PARA MODOS CLAROS) ==================== */
+        /* ==================== PANEL DE CONFIGURACIÓN ==================== */
         .config-panel {
             position: fixed; top: 0; right: -420px;
             width: 380px; height: 100vh;
@@ -268,7 +337,6 @@
 </head>
 <body class="modo-clasico neon-fonts-on animations-on">
 
-    <!-- Tu contenido HTML (igual que antes) -->
     <div class="contenedor">
         <h1>ACADEMIA DIGITAL DE LIBROS</h1>
 
@@ -293,8 +361,16 @@
             INICIAR SESIÓN PARA ACCEDER A LA BIBLIOTECA
         </a>
 
+        <!-- BUSCADOR DE CATEGORÍAS (justo debajo del botón de iniciar sesión) -->
+        <div class="buscador-categorias">
+            <div class="input-wrapper">
+                <span class="material-symbols-outlined search-icon">search</span>
+                <input type="text" id="buscadorCategorias" placeholder="🔎 Buscar categorías (ej: filosofía, ciencia, arte...)">
+            </div>
+        </div>
+
         <div class="categorias">
-            <!-- Tus carpetas aquí (sin cambios) -->
+            <!-- Tus carpetas aquí -->
             <a href="https://drive.google.com/drive/folders/120Fhk8EhI9oUUcoZiOjXR4iLN2tmKwHK" class="btn-carpeta filosofia" target="_blank">
                 <span class="material-symbols-outlined icono">menu_book</span> Filosofía
             </a>
@@ -316,7 +392,7 @@
         </div>
     </div>
 
-    <!-- PANEL DE TEMAS -->
+    <!-- PANEL DE TEMAS (sin cambios) -->
     <div class="config-panel" id="configPanel">
         <div class="config-header">
             <div class="config-title">Neon Profesional</div>
@@ -339,114 +415,4 @@
                 <option value="modo-neon-black-green">Black Green</option>
                 <option value="modo-light-blue">Light Neon Blue</option>
                 <option value="modo-light-pink">Light Neon Pink</option>
-                <option value="modo-light-green">Light Neon Green</option>
-                <option value="modo-light-purple">Light Neon Purple</option>
-                <option value="modo-light-gold">Light Neon Gold</option>
-                <option value="modo-neon-rgb">Neon RGB (Arcoíris Total)</option>
-            </select>
-        </div>
-
-        <div class="config-section">
-            <h3>2. Color Principal Neon</h3>
-            <input type="color" id="neonColor" value="#0066cc">
-        </div>
-
-        <div class="config-section">
-            <h3>3. Ajustes</h3>
-            <label>Intensidad del Glow <span id="intensityValue">65%</span></label>
-            <input type="range" id="intensity" min="0.3" max="1.2" step="0.05" value="0.65">
-
-            <label>Radio de Bordes <span id="radiusValue">14</span></label>
-            <input type="range" id="borderRadius" min="6" max="28" step="1" value="14">
-        </div>
-
-        <div class="config-section">
-            <h3>4. Efectos Globales</h3>
-            <label><input type="checkbox" id="animToggle" checked> Activar pulso neon suave</label>
-            <label><input type="checkbox" id="fontNeonToggle" checked> Activar Neon en textos</label>
-        </div>
-
-        <button id="saveConfig">💾 Guardar Configuración</button>
-        <button id="resetConfig">🔄 Restaurar por Defecto</button>
-    </div>
-
-    <script>
-        // El JavaScript es el mismo que la versión anterior (ya funciona bien)
-        const body = document.body;
-        const configPanel = document.getElementById('configPanel');
-        const openConfig = document.getElementById('openConfig');
-        const closeConfig = document.getElementById('closeConfig');
-        const themeSelect = document.getElementById('themeSelect');
-        const neonColorInput = document.getElementById('neonColor');
-        const intensitySlider = document.getElementById('intensity');
-        const radiusSlider = document.getElementById('borderRadius');
-        const intensityValue = document.getElementById('intensityValue');
-        const radiusValue = document.getElementById('radiusValue');
-        const animToggle = document.getElementById('animToggle');
-        const fontNeonToggle = document.getElementById('fontNeonToggle');
-
-        const neonClasses = ['modo-clasico','modo-neon-purple','modo-neon-cyber','modo-neon-green','modo-neon-pink','modo-neon-orange','modo-neon-red','modo-neon-gold','modo-neon-black-blue','modo-neon-black-red','modo-neon-black-green','modo-light-blue','modo-light-pink','modo-light-green','modo-light-purple','modo-light-gold','modo-neon-rgb'];
-
-        function applyChanges() {
-            document.documentElement.style.setProperty('--neon-primary', neonColorInput.value);
-            document.documentElement.style.setProperty('--neon-glow', neonColorInput.value);
-            document.documentElement.style.setProperty('--glow-intensity', intensitySlider.value);
-
-            intensityValue.textContent = Math.round(intensitySlider.value * 100) + "%";
-            radiusValue.textContent = radiusSlider.value;
-            document.documentElement.style.setProperty('--radio', radiusSlider.value + "px");
-        }
-
-        openConfig.addEventListener('click', () => configPanel.classList.add('open'));
-        closeConfig.addEventListener('click', () => configPanel.classList.remove('open'));
-
-        themeSelect.addEventListener('change', () => {
-            body.classList.remove(...neonClasses);
-            body.classList.add(themeSelect.value);
-            body.classList.remove('animations-on');
-            void body.offsetWidth;
-            if (animToggle.checked) body.classList.add('animations-on');
-        });
-
-        neonColorInput.addEventListener('input', applyChanges);
-        intensitySlider.addEventListener('input', applyChanges);
-        radiusSlider.addEventListener('input', applyChanges);
-        animToggle.addEventListener('change', () => body.classList.toggle('animations-on', animToggle.checked));
-        fontNeonToggle.addEventListener('change', () => body.classList.toggle('neon-fonts-on', fontNeonToggle.checked));
-
-        document.getElementById('saveConfig').addEventListener('click', () => {
-            const config = { theme: themeSelect.value, neonColor: neonColorInput.value, intensity: intensitySlider.value, radius: radiusSlider.value, animations: animToggle.checked, fontNeon: fontNeonToggle.checked };
-            localStorage.setItem('neonConfig', JSON.stringify(config));
-            alert("¡Configuración guardada correctamente! ✅");
-        });
-
-        document.getElementById('resetConfig').addEventListener('click', () => {
-            if (confirm("¿Restaurar todas las configuraciones por defecto?")) {
-                localStorage.removeItem('neonConfig');
-                location.reload();
-            }
-        });
-
-        window.addEventListener('load', () => {
-            const saved = localStorage.getItem('neonConfig');
-            if (saved) {
-                const c = JSON.parse(saved);
-                body.classList.remove(...neonClasses);
-                body.classList.add(c.theme || 'modo-clasico');
-                themeSelect.value = c.theme || 'modo-clasico';
-                neonColorInput.value = c.neonColor || '#0066cc';
-                intensitySlider.value = c.intensity || 0.65;
-                radiusSlider.value = c.radius || 14;
-                animToggle.checked = c.animations !== false;
-                fontNeonToggle.checked = c.fontNeon !== false;
-            }
-            applyChanges();
-            if (animToggle.checked) {
-                body.classList.remove('animations-on');
-                void body.offsetWidth;
-                body.classList.add('animations-on');
-            }
-        });
-    </script>
-</body>
-</html>
+                <option va
