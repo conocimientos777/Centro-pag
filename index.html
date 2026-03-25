@@ -343,7 +343,7 @@
         <div class="info">
             <h2>Acceso Exclusivo y Permanente de por Vida</h2>
             <p>Obtén desbloqueo de por vida a nuestra biblioteca digital, con actualizaciones constantes de títulos en diversas áreas del conocimiento.</p>
-            <div class="cantidad-libros">+ 150.000 libros</div>
+            <div class="cantidad-libros">+ 151 Cursos PDF</div>
 
             <h3 style="margin: 26px 0 14px; font-size: 1.25rem;">Contáctanos en Nuestras Redes</h3>
             <div class="redes">
@@ -365,35 +365,52 @@
         <div class="buscador-categorias">
             <div class="input-wrapper">
                 <span class="material-symbols-outlined search-icon">search</span>
-                <input type="text" id="buscadorCategorias" placeholder="🔎 Buscar categorías (ej: filosofía, ciencia, arte...)">
+                <input type="text" id="buscadorCategorias" placeholder="🔎 Buscar categorías (ej: programación, marketing, idiomas...)">
             </div>
         </div>
 
         <div class="categorias">
-            <!-- Tus carpetas aquí -->
-           <a href="filosofia.html" class="btn-carpeta filosofia" target="_blank">
-  <span class="material-symbols-outlined icono">menu_book</span>
-  Filosofía
-</a>
-            <a href="https://drive.google.com/drive/folders/1KChLxlLLqMEFxQ6ASK3t3RORe45p12mJ" class="btn-carpeta historia" target="_blank">
-                <span class="material-symbols-outlined icono">history_edu</span> Historia
+            <!-- ==================== TODAS LAS CATEGORÍAS PRINCIPALES ==================== -->
+            <a href="#" class="btn-carpeta tecnologia" target="_blank">
+                <span class="material-symbols-outlined icono">code</span>
+                Programación y Desarrollo
             </a>
-            <a href="https://drive.google.com/drive/folders/1Yn89vyhUYnPwphLVGpf1TymFVZ0s8GLN" class="btn-carpeta ciencias" target="_blank">
-                <span class="material-symbols-outlined icono">science</span> Ciencias
+            <a href="#" class="btn-carpeta" style="background: #e91e63;" target="_blank">
+                <span class="material-symbols-outlined icono">campaign</span>
+                Marketing Digital y Ventas
             </a>
-            <a href="https://drive.google.com/drive/folders/1ym39m7ljdTl0hC4ZpWFvFRrRJ7m9gNvC" class="btn-carpeta literatura" target="_blank">
-                <span class="material-symbols-outlined icono">library_books</span> Literatura
+            <a href="#" class="btn-carpeta" style="background: #f44336;" target="_blank">
+                <span class="material-symbols-outlined icono">security</span>
+                Hacking Ético y Ciberseguridad
             </a>
-            <a href="https://drive.google.com/drive/folders/1PBJoNoMs6LFnIy3BzCHKW7ZPp0KpLH2U" class="btn-carpeta arte" target="_blank">
-                <span class="material-symbols-outlined icono">palette</span> Arte
+            <a href="#" class="btn-carpeta" style="background: #ff9800;" target="_blank">
+                <span class="material-symbols-outlined icono">language</span>
+                Idiomas
             </a>
-            <a href="https://drive.google.com/drive/folders/1aLc5gwah6C9wS_TBVa2zcPGgztZz7tYD" class="btn-carpeta tecnologia" target="_blank">
-                <span class="material-symbols-outlined icono">computer</span> Tecnología
+            <a href="#" class="btn-carpeta" style="background: #9c27b0;" target="_blank">
+                <span class="material-symbols-outlined icono">palette</span>
+                Diseño y Creatividad
+            </a>
+            <a href="#" class="btn-carpeta" style="background: #4caf50;" target="_blank">
+                <span class="material-symbols-outlined icono">build</span>
+                Oficios y Reparaciones
+            </a>
+            <a href="#" class="btn-carpeta" style="background: #00bcd4;" target="_blank">
+                <span class="material-symbols-outlined icono">attach_money</span>
+                Finanzas y Emprendimiento
+            </a>
+            <a href="#" class="btn-carpeta" style="background: #673ab7;" target="_blank">
+                <span class="material-symbols-outlined icono">psychology</span>
+                Desarrollo Personal y Productividad
+            </a>
+            <a href="#" class="btn-carpeta" style="background: #ff5722;" target="_blank">
+                <span class="material-symbols-outlined icono">folder_open</span>
+                Otros Cursos y Misceláneos
             </a>
         </div>
     </div>
 
-    <!-- PANEL DE TEMAS (sin cambios) -->
+    <!-- PANEL DE CONFIGURACIÓN (sin cambios) -->
     <div class="config-panel" id="configPanel">
         <div class="config-header">
             <div class="config-title">Neon Profesional</div>
@@ -535,12 +552,12 @@
 
         buscadorInput.addEventListener('input', () => {
             const termino = normalizeText(buscadorInput.value.trim());
-            
+
             let resultadosVisibles = 0;
 
             categoriaItems.forEach(item => {
                 const textoCategoria = normalizeText(item.textContent);
-                
+
                 if (termino === '' || textoCategoria.includes(termino)) {
                     item.style.display = 'flex';
                     resultadosVisibles++;
@@ -548,9 +565,6 @@
                     item.style.display = 'none';
                 }
             });
-
-            // Si no hay resultados y el usuario escribió algo, el grid se queda vacío (se ve limpio)
-            // Puedes agregar un mensaje si quieres, pero por ahora queda minimalista y funcional.
         });
 
         // Limpieza automática al borrar todo
