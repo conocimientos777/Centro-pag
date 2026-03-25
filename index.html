@@ -442,7 +442,7 @@
     </div>
 
     <script>
-        // === CONFIGURACIÓN DE TEMAS ===
+        // ==================== CONFIGURACIÓN DE TEMAS (CORREGIDO Y FORZADO) ====================
         const body = document.body;
         const configPanel = document.getElementById('configPanel');
         const openConfig = document.getElementById('openConfig');
@@ -481,6 +481,7 @@
         animToggle.addEventListener('change', () => body.classList.toggle('animations-on', animToggle.checked));
         fontNeonToggle.addEventListener('change', () => body.classList.toggle('neon-fonts-on', fontNeonToggle.checked));
 
+        // Botón Guardar Configuración (corregido)
         document.getElementById('saveConfig').addEventListener('click', () => {
             const config = {
                 theme: themeSelect.value,
@@ -491,7 +492,7 @@
                 fontNeon: fontNeonToggle.checked
             };
             localStorage.setItem('neonConfig', JSON.stringify(config));
-            alert("¡Configuración guardada correctamente! ✅");
+            alert("¡Configuración guardada correctamente! ✅\nRecarga la página para ver los cambios aplicados.");
         });
 
         document.getElementById('resetConfig').addEventListener('click', () => {
@@ -502,7 +503,7 @@
             }
         });
 
-        // ==================== LOGIN PERSISTENTE (insensible a mayúsculas) ====================
+        // ==================== LOGIN (ya estaba perfecto) ====================
         const seccionLogin = document.getElementById('seccionLogin');
         const mensajeEstado = document.getElementById('mensajeEstado');
         const btnLogin = document.getElementById('btnLogin');
@@ -570,30 +571,39 @@
             }
         }
 
-        // Cargar al iniciar
+        // ==================== CARGA INICIAL (FORZADA Y CORREGIDA) ====================
         window.addEventListener('load', async () => {
-            // Cargar configuración de temas
+            // Cargar configuración guardada
             const savedConfig = localStorage.getItem('neonConfig');
             if (savedConfig) {
                 const c = JSON.parse(savedConfig);
+
+                // Aplicar tema
                 body.classList.remove(...neonClasses);
                 body.classList.add(c.theme || 'modo-clasico');
                 themeSelect.value = c.theme || 'modo-clasico';
+
+                // Aplicar color e intensidad
                 neonColorInput.value = c.neonColor || '#0066cc';
                 intensitySlider.value = parseFloat(c.intensity) || 0.65;
                 radiusSlider.value = parseFloat(c.radius) || 14;
+
+                // Aplicar checkboxes correctamente
                 animToggle.checked = c.animations !== false;
                 fontNeonToggle.checked = c.fontNeon !== false;
 
-                if (animToggle.checked) body.classList.add('animations-on');
-                if (fontNeonToggle.checked) body.classList.add('neon-fonts-on');
+                // Forzar las clases de animación y glow
+                body.classList.toggle('animations-on', animToggle.checked);
+                body.classList.toggle('neon-fonts-on', fontNeonToggle.checked);
             } else {
+                // Valores por defecto
                 body.classList.add('animations-on');
                 body.classList.add('neon-fonts-on');
             }
+
             applyChanges();
 
-            // Verificar sesión guardada
+            // Login persistente
             const usuarioGuardado = localStorage.getItem('usuarioLogueado');
             if (usuarioGuardado) {
                 actualizarEstadoSesion(true, usuarioGuardado);
@@ -602,6 +612,7 @@
             }
         });
 
+        // Eventos del login
         btnLogin.addEventListener('click', intentarLogin);
         document.getElementById('inputContrasena').addEventListener('keypress', (e) => {
             if (e.key === "Enter") intentarLogin();
